@@ -1,0 +1,35 @@
+import pepita.*
+
+test "Inicialmente la manzana otorga 50 de energia" {
+  assert.that(manzana.energia() == 50)
+}
+
+test "Cuando la manzana madura 2 veces, otorga 60 de energia" {
+  manzana.madurar()
+  manzana.madurar()
+  assert.equals(manzana.energia(), 60)
+}
+
+test "Cuando la manzana madura 10 veces, otorga 100 de energia" {
+   10.times{_ => manzana.madurar()}
+
+  assert.equals(manzana.energia(), 100)
+}
+
+test "Cuando la manzana madura 11 veces, se pudre y otorga 80 de energia" {
+ 11.times{_ => manzana.madurar()}
+
+  assert.equals(manzana.energia(), 80)
+}
+
+test "Cuando la manzana madura 12 veces, se pudre y otorga 60 de energia" {
+  12.times{_ => manzana.madurar()}
+
+  assert.equals(manzana.energia(), 60)
+}
+
+test "Cuando la manzana madura 25 veces, se pudre y otorga 50 de energia" {
+  25.times{_ => manzana.madurar()}
+
+  assert.equals(manzana.energia(), 0)
+}
