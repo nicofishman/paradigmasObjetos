@@ -1,0 +1,60 @@
+import wollok.game.*
+import pepita.*
+
+program PepitaGame {
+  game.title("Juego de pepa")
+  game.height(20)
+  game.width(20)
+  game.boardGround("back.jpg")
+
+  game.addVisual(pepita)
+  game.addVisual(alpiste)
+  game.addVisual(manzana)
+  game.addVisual(nido)
+
+  keyboard.right().onPressDo({
+    pepita.position(pepita.position().right(1))
+    pepita.volar(1)
+  })
+
+  keyboard.left().onPressDo({
+    pepita.position(pepita.position().left(1))
+    pepita.volar(1)
+  })
+
+  keyboard.up().onPressDo({
+    pepita.position(pepita.position().up(1))
+    pepita.volar(1)
+  })
+
+  keyboard.space().onPressDo({
+    game.say(pepita, 
+      if (pepita.estaCansada()) {
+        "Estoy cansada"
+      } else {
+        "Estoy bien"
+      }
+    )
+  })
+
+
+  game.onTick(2000, "movimiento", {
+    pepita.position(pepita.position().down(1))
+  })
+
+  game.onCollideDo(pepita, { collided => 
+    collided.reaccionar(pepita)
+  })
+
+  // keyboard.c().onPressDo({
+  //   if (pepita.position() == alpiste.position()) {
+  //     pepita.comer(alpiste)
+  //     game.removeVisual(alpiste)
+  //   } else if (pepita.position() == manzana.position()) {
+  //     pepita.comer(manzana)
+  //     game.removeVisual(manzana)
+  //   }
+  // })
+
+  game.start()
+}

@@ -1,0 +1,39 @@
+import cartas.*
+
+describe "group of tests for cartas" {
+
+  test "luisLuis consigue una carta" {
+    luisLuis.conseguirCarta(anchoDeEspadas)
+    assert.that(luisLuis.tieneCarta(anchoDeEspadas))  
+  }
+
+  test "luisLuis no tiene una carta que no consiguio" {
+    assert.that(!luisLuis.tieneCarta(cartaPikachu))  
+  }
+
+  test "luisLuis vende una carta" {
+    luisLuis.conseguirCarta(anchoDeEspadas)
+    luisLuis.vender()
+    assert.equals(luisLuis.dinero(), 300)  
+    assert.that(!luisLuis.tieneCarta(anchoDeEspadas))
+  }
+
+  test "luisluis consigue y vende varias cartas" {
+    luisLuis.conseguirCarta(anchoDeEspadas)
+    luisLuis.conseguirCarta(cartaPikachu)
+    luisLuis.vender()
+    assert.equals(luisLuis.dinero(), 300)  
+    assert.that(luisLuis.tieneCarta(cartaPikachu))
+    assert.equals(luisLuis.cuantasCartas(), 1)
+  }
+
+  test "cotizacion de cartas" {
+    luisLuis.conseguirCarta(anchoDeEspadas)
+    luisLuis.conseguirCarta(cartaPikachu)
+    luisLuis.conseguirCarta(cartaYugiOh)
+
+    assert.equals(luisLuis.cuantasCartas(), 3)
+    assert.equals(luisLuis.cotizacion(), 810)
+  }
+
+}
