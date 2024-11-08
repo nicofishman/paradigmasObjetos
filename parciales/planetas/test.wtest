@@ -1,0 +1,87 @@
+import planetas.*
+describe "Parte 1" {
+  /*
+  Pruebas
+  Considerar un planeta con cuatro personas como habitantes, dos murallas y un museo. Verificar que:
+  la delegación diplomática está formada por tres de ellas. es valioso. agregar otro planeta, con habitantes y construcciones, pero que no sea valioso. 
+
+  Hacer que algunos de sus habitantes ganen o gasten monedas y/o cumplan años y en consecuencia cambien algunas de las respuestas anteriores.
+
+*/
+  test "Test 1" {
+    const planeta = new Planeta(
+      habitantes = [
+        new Persona(recursos = 10, edad = 20),
+        new Persona(recursos = 40, edad = 30),
+        new Persona(recursos = 50, edad = 40),
+        new Persona(recursos = 20, edad = 70)
+      ],
+      construcciones =[
+        new Muralla(longitud = 10),
+        new Muralla(longitud = 20),
+        new Museo(superficieCubierta = 10, indiceImportancia = 5)
+      ]
+    )
+
+    const delegacion = planeta.delegacionDiplomatica()
+    assert.equals(delegacion.size(), 3)
+
+    assert.that(planeta.esValioso())
+  }
+
+  test "Test 2" {
+    const otroPlaneta = new Planeta(
+      habitantes = [
+        new Persona(recursos = 10, edad = 20),
+        new Persona(recursos = 40, edad = 30),
+        new Persona(recursos = 50, edad = 40),
+        new Persona(recursos = 20, edad = 50)
+      ],
+      construcciones =[
+        new Muralla(longitud = 1),
+        new Muralla(longitud = 2),
+        new Museo(superficieCubierta = 10, indiceImportancia = 1)
+      ]
+    )
+
+    assert.notThat(otroPlaneta.esValioso())
+  }
+
+  /*
+  Más pruebas
+  - Definir constructores que vivan en diferentes regiones y al menos un productor y probar que trabajen bien.
+  - Hacer que algunos de ellos integren la delegación diplomática de su planeta 
+
+  La historia del planeta
+  - Hacer que la delegación diplomática del planeta trabaje durante un determinado tiempo en su planeta
+  - Hacer que un planeta invada a otro y obligue a su delegación diplomática a trabajar para el planeta invasor.
+  */
+  test "Test 3" {
+    const contructor1 = new Constructor(region = "montana", edad = 30, inteligencia = 10)
+    const contructor2 = new Constructor(region = "costa", edad = 40, inteligencia = 20)
+    const productor = new Productor(edad = 50, tecnicas = ["cultivo", "construccion"])
+
+    const planeta = new Planeta(
+      habitantes = [
+        contructor1,
+        contructor2,
+        productor,
+        new Persona(recursos = 10, edad = 20),
+        new Persona(recursos = 40, edad = 30),
+        new Persona(recursos = 50, edad = 40),
+        new Persona(recursos = 20, edad = 50)
+      ],
+      construcciones =[
+        new Muralla(longitud = 10),
+        new Muralla(longitud = 20),
+        new Museo(superficieCubierta = 10, indiceImportancia = 5)
+      ]
+    )
+
+
+    const delegacion = planeta.delegacionDiplomatica()
+    assert.equals(delegacion.size(), 3)
+
+    assert.that(planeta.esValioso())
+  }
+}
